@@ -53,6 +53,8 @@
             </div>
         </div>
     </div>
+
+
     @includeIf('kategori.form')
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
