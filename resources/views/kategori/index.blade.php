@@ -34,7 +34,7 @@
                                     class="fa fa-plus-circle"></i>
                                 Tambah</button>
                             <a href="{{ url('/category/cetak') }}" class="btn btn-primary">Export PDF</a>
-                            <a href="/category/export_excel" class="btn btn-success my-3" target="_blank">EXPORT EXCEL</a>
+                            <a href="{{ url('/category/export_excel') }}" class="btn btn-success my-3" target="_blank">EXPORT EXCEL</a>
                         </div>
                         <div class="box-body table-responsive">
                             <table class="table table-stiped table-bordered">
