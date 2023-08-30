@@ -46,6 +46,19 @@
                                         <th width="10%"><i class="fas fa-cog"></i></th>
                                     </tr>
                                 </thead>
+
+                                @foreach ($dataKategori as $item)
+                                    <tr>
+                                        <td width="5%">1</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->description }}</td>
+                                        <td width="10%">
+                                            <a href="javascript:void(0)" data-id="{{ $item->id }}" class="edit btn btn-primary btn-sm editKategori"><i class="fa fa-edit"></i>Edit</a>
+                                            <a href="javascript:void(0)" data-id="{{ $item->id }}" class="btn btn-danger btn-sm deleteKategori"><i class="fa fa-trash"></i>Delete</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
                             </table>
                         </div>
                     </div>
@@ -62,6 +75,11 @@
         src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.11.3/af-2.3.7/b-2.1.1/cr-1.5.5/date-1.1.1/fc-4.0.1/fh-3.2.1/kt-2.6.4/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sb-1.3.0/sp-1.4.0/sl-1.3.4/sr-1.0.1/datatables.min.js">
     </script>
     <script>
+
+    $(document).ready(function(){
+		$('.table').DataTable();
+	});
+
         //seting header csrf token laravel untuk semua request ajax
         $(function() {
             $.ajaxSetup({
@@ -70,40 +88,6 @@
                 }
             });
 
-        });
-
-        //membuat datatables
-        var table = $('.table').DataTable({
-            processing: true,
-            autoWidth: false,
-            responsive: true,
-            lengthChange: true,
-            processing: true,
-            serverSide: true,
-            dom: 'lfrtip',
-            //mengambil data dengan category controller
-            ajax: "{{ route('category.index') }}",
-            columns: [{
-                    data: 'DT_RowIndex',
-                    searchable: false
-                },
-                {
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    data: 'description',
-                    name: 'description',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                },
-            ]
         });
 
         //close modal

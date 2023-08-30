@@ -1,4 +1,5 @@
 <h1 class="display-4">Data Kategori</h1>
+{{-- <img src="data:image/png;base64, {!! base64_encode($qrcode) !!} "> --}}
 <table class="table" border="1">
     <thead>
         <tr>

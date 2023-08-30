@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\SendEmailController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmail;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 
 Route::controller(CategoryController::class)->group(function () {
@@ -30,3 +33,19 @@ Route::controller(CategoryController::class)->group(function () {
     Route::get('/category/cetak', 'cetak')->name('category.cetak');
     Route::get('/category/export_excel', 'export_excel')->name('category.export_excel');
  });
+
+/*
+ Route::get('/send-email',function(){
+    $data = [
+        'name' => 'Farhan Sutrisno',
+        'body' => 'Lagi Belajar Kirim Email'
+    ];
+
+    Mail::to('farhansutrisno98@gmail.com')->send(new SendEmail($data));
+
+    dd("Email Berhasil dikirim.");
+}); */
+
+Route::get('/send-email', [SendEmailController::class, 'index'])->name('kirim-email');
+
+Route::post('/post-email', [SendEmailController::class, 'store'])->name('post-email');

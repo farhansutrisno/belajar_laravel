@@ -7,6 +7,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Exports\CategoryExport;
 use Maatwebsite\Excel\Facades\Excel;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class categoryController extends Controller
 {
@@ -14,23 +15,7 @@ class categoryController extends Controller
     {
         //medapatkan semua data category
         $category = Category::all();
-        //jika ada request ajax maka yang direturn adalah datatables
-        if ($request->ajax()) {
-            return Datatables::of($category)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    //kita tambahkan button edit dan hapus
-                    $btn = '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit btn btn-primary btn-sm editKategori"><i class="fa fa-edit"></i>Edit</a>';
-
-                    $btn = $btn . ' <a href="javascript:void(0)" data-id="' . $row->id . '" class="btn btn-danger btn-sm deleteKategori"><i class="fa fa-trash"></i>Delete</a>';
-
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
-        return view('kategori.index',compact('category'));
+        return view('kategori.index',['dataKategori' => $category]);
     }
 
 
@@ -68,8 +53,11 @@ class categoryController extends Controller
     public function cetak()
     {
         $dataKategori = Category::all();
+        $qrCode = QrCode::size(80)->generate('https://example.com');
+        // var_dump($dataKategori);
+        //die($qrCode);
 
-        $pdf = \PDF::loadview('kategori.cetak', ['dataKategori' => $dataKategori]);
+        $pdf = \PDF::loadview('kategori.cetak', ['dataKategori' => $dataKategori,'qrcode' => $qrCode]);
         return $pdf->download('laporan-kategori.pdf');
     }
 
